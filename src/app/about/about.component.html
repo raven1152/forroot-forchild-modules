@@ -1,0 +1,13 @@
+<ul>
+  <li *ngFor="let route of routes">
+    {{ route.path }}
+    <div *ngIf="route.children">
+      <div *ngFor="let rt of route.children">
+        <span>{{ rt.path }}</span>
+        <pre *ngIf="rt.children">
+          {{rt.children | json}}
+        </pre>
+      </div>
+    </div>
+  </li>
+</ul>

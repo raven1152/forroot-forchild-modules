@@ -1,0 +1,101 @@
+<form [formGroup]="heroForm">
+
+  <mat-card class="form-section" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        Hero
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <mat-form-field>
+          <mat-label>Hero Name</mat-label>
+          <input
+            matInput
+            formControlName="heroName"
+            type="text"
+            placeholder="Hero Name"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>AKA</mat-label>
+          <input
+            matInput
+            formControlName="aka"
+            type="text"
+            placeholder="AKA"
+          />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        Super Power
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="col">
+      <app-powers></app-powers>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        Hobbies
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="col">
+      <app-hobbies
+        [parentForm]="heroForm"
+        [formGroup]="hobbiesForm"
+      ></app-hobbies>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="raised">
+    <mat-card-header>
+      <mat-card-title>
+        Add Course Lessons:
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container formArrayName="lessons">
+        <ng-container *ngFor="let lessonForm of lessons.controls; let i = index">
+          <div class="lesson-form-row" [formGroup]="toFormGroup(lessonForm)">
+            <mat-form-field appearance="fill">
+              <input
+                matInput
+                formControlName="title"
+                placeholder="Lesson title">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-select
+                formControlName="level"
+                placeholder="Lesson level">
+
+                <mat-option value="beginner">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+            <mat-icon class="delete-btn" (click)="deleteLesson(i)">
+              delete_forever</mat-icon>
+          </div>
+        </ng-container>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-mini-fab (click)="addLesson()">
+        <mat-icon class="add-course-btn">add</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <button mat-raised-button (click)="logFormData()" color="primary">Submit</button>
+</form>
